@@ -1,0 +1,26 @@
+/* Progress Bar Styles - STRICT IMPLEMENTATION */
+
+.progress-bar-container {
+  width: 100%;
+}
+
+.progress-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px currentColor;
+}

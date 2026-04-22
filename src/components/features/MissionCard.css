@@ -1,0 +1,84 @@
+/* Mission Card Styles - STRICT IMPLEMENTATION */
+
+.mission-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow: hidden;
+}
+
+.mission-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.mission-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.mission-info {
+  flex: 1;
+}
+
+.mission-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.mission-category {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mission-xp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid var(--neon-purple);
+  border-radius: var(--radius-sm);
+}
+
+.xp-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--neon-purple);
+}
+
+.xp-label {
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.mission-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.mission-completed {
+  opacity: 0.7;
+}
+
+.mission-check-overlay {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 50px;
+  height: 50px;
+}
+
+.check-icon {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px var(--neon-green));
+}

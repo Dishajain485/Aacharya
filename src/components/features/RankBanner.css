@@ -1,0 +1,90 @@
+/* Rank Banner Styles - STRICT IMPLEMENTATION */
+
+.rank-banner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.rank-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.current-rank,
+.next-rank {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid;
+  border-radius: var(--radius-md);
+  flex: 1;
+  min-width: 200px;
+}
+
+.rank-icon-large {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+.rank-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rank-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rank-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+}
+
+.rank-letter {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.rank-arrow {
+  font-size: 2rem;
+  color: var(--text-tertiary);
+}
+
+.rank-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.rank-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .rank-banner-content {
+    flex-direction: column;
+  }
+  
+  .rank-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .current-rank,
+  .next-rank {
+    width: 100%;
+  }
+}

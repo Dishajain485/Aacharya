@@ -1,0 +1,54 @@
+/* Chat Bubble Styles - STRICT IMPLEMENTATION */
+
+.chat-bubble-wrapper {
+  display: flex;
+  margin-bottom: var(--space-md);
+}
+
+.chat-bubble-wrapper.user {
+  justify-content: flex-end;
+}
+
+.chat-bubble-wrapper.ai {
+  justify-content: flex-start;
+}
+
+.chat-bubble {
+  max-width: 75%;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.user-bubble {
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  border-bottom-right-radius: 0.25rem;
+}
+
+.ai-bubble {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-bottom-left-radius: 0.25rem;
+}
+
+.chat-text {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+}
+
+.chat-time {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  display: block;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .chat-bubble {
+    max-width: 85%;
+  }
+}
