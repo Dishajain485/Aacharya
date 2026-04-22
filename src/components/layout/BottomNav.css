@@ -1,0 +1,68 @@
+/* Bottom Navigation Styles - STRICT IMPLEMENTATION */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--glass-border);
+  z-index: var(--z-dropdown);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: var(--space-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition-base);
+  border-radius: var(--radius-sm);
+  min-width: 60px;
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  transition: var(--transition-base);
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: var(--transition-base);
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-item.active {
+  color: var(--neon-purple);
+}
+
+.nav-item.active .nav-icon {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px var(--neon-purple));
+}
+
+.nav-item.active .nav-label {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .nav-label {
+    font-size: 0.65rem;
+  }
+  
+  .nav-icon {
+    font-size: 1.25rem;
+  }
+}

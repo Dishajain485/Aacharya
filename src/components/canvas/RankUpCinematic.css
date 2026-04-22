@@ -1,0 +1,86 @@
+/* Rank Up Cinematic Styles - STRICT IMPLEMENTATION */
+
+.rank-up-cinematic {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-cinematic);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.cinematic-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  text-align: center;
+}
+
+.rank-icon-massive {
+  font-size: 8rem;
+  filter: drop-shadow(0 0 30px currentColor);
+}
+
+.rank-title {
+  font-size: 4rem;
+  font-weight: 900;
+  font-family: var(--font-heading);
+  text-shadow: 0 0 30px currentColor;
+  letter-spacing: 0.1em;
+}
+
+.rank-name-large {
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  text-shadow: 0 0 20px currentColor;
+}
+
+.rank-letter-large {
+  font-size: 2rem;
+  font-weight: 600;
+  text-shadow: 0 0 15px currentColor;
+}
+
+.rank-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .rank-icon-massive {
+    font-size: 5rem;
+  }
+  
+  .rank-title {
+    font-size: 2.5rem;
+  }
+  
+  .rank-name-large {
+    font-size: 2rem;
+  }
+  
+  .rank-letter-large {
+    font-size: 1.5rem;
+  }
+}

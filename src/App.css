@@ -1,0 +1,13 @@
+/* App Styles - STRICT IMPLEMENTATION */
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Ensure all pages have proper z-index above particle background */
+.app > * {
+  position: relative;
+  z-index: 1;
+}

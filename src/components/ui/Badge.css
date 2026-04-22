@@ -1,0 +1,87 @@
+/* Badge Styles - STRICT IMPLEMENTATION */
+
+.badge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--space-md);
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+}
+
+.badge-icon {
+  font-size: 2.5rem;
+  transition: var(--transition-base);
+}
+
+.badge-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* Sizes */
+.badge-sm .badge-icon {
+  font-size: 2rem;
+}
+
+.badge-sm .badge-name {
+  font-size: 0.75rem;
+}
+
+.badge-lg .badge-icon {
+  font-size: 3rem;
+}
+
+.badge-lg .badge-name {
+  font-size: 1rem;
+}
+
+/* Rarity */
+.badge-common {
+  border-color: #71717a;
+}
+
+.badge-rare {
+  border-color: var(--neon-cyan);
+}
+
+.badge-epic {
+  border-color: var(--neon-purple);
+}
+
+.badge-legendary {
+  border-color: var(--neon-gold);
+  box-shadow: var(--shadow-neon-gold);
+}
+
+/* Locked State */
+.badge-locked {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+.badge-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+}
+
+/* Hover */
+.badge:not(.badge-locked):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px currentColor;
+}
+
+.badge:not(.badge-locked):hover .badge-icon {
+  transform: scale(1.1);
+}

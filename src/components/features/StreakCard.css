@@ -1,0 +1,95 @@
+/* Streak Card Styles - STRICT IMPLEMENTATION */
+
+.streak-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.streak-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.streak-icon-large {
+  font-size: 3rem;
+}
+
+.streak-info {
+  flex: 1;
+}
+
+.streak-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.streak-count {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--neon-gold);
+}
+
+.streak-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.streak-bar {
+  height: 8px;
+  background: rgba(251, 191, 36, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.streak-fill {
+  height: 100%;
+  background: var(--gradient-gold);
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px var(--neon-gold);
+}
+
+.streak-milestone {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.streak-milestones {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.milestone {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-base);
+}
+
+.milestone.achieved {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: var(--neon-gold);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+.milestone-icon {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.milestone.achieved .milestone-icon {
+  color: var(--neon-gold);
+}

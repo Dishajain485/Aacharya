@@ -1,0 +1,18 @@
+/* XP Fly Up Styles - STRICT IMPLEMENTATION */
+
+.xp-fly-up {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-toast);
+  pointer-events: none;
+}
+
+.xp-fly-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--neon-gold);
+  text-shadow: 0 0 20px var(--neon-gold);
+  animation: xpFlyUp 1s ease forwards;
+}
