@@ -4,7 +4,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Chat with AI
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { message } = req.body;
 
@@ -20,7 +20,7 @@ router.post('/', auth, async (req, res) => {
       return res.status(500).json({ error: 'Gemini API key is missing in environment' });
     }
 
-    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+    const model = process.env.GEMINI_MODEL || 'gemini-flash-latest';
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
       {
@@ -35,12 +35,16 @@ router.post('/', auth, async (req, res) => {
               role: 'user',
               parts: [{ text: `You are Aacharya, a wise and motivating AI wellness mentor. Your goal is to help users build healthy habits, stay fit, and maintain a positive mindset. Keep your responses concise, encouraging, and actionable.
 
+IMPORTANT: If the user explicitly asks you to change their fitness goal, you MUST include this exact string in your response: [ACTION:CHANGE_GOAL:<goal_id>]
+Replace <goal_id> with exactly one of these options based on their request: 'weight-loss', 'muscle-gain', or 'stay-fit'.
+Do not use this command unless the user explicitly requests to change their goal.
+
 User message: ${message}` }]
             }
           ],
           generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 500,
+            maxOutputTokens: 2048,
           }
         }),
       }

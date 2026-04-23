@@ -11,7 +11,10 @@ const Setup = () => {
   const { dispatch } = useApp();
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [weight, setWeight] = useState('');
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const [suggestedGoalId, setSuggestedGoalId] = useState(null);
 
   const goals = [
     {
@@ -45,6 +48,26 @@ const Setup = () => {
       dispatch({ type: 'SET_USER_NAME', payload: name });
       dispatch({ type: 'COMPLETE_ONBOARDING' });
       setStep(2);
+    }
+  };
+
+  const handleStatsSubmit = () => {
+    if (age && weight) {
+      dispatch({ type: 'SET_USER_AGE', payload: age });
+      dispatch({ type: 'SET_USER_WEIGHT', payload: weight });
+      
+      // Auto-suggest goal logic based on weight
+      const weightNum = parseFloat(weight);
+      let suggested = null;
+      if (weightNum > 80) suggested = 'weight-loss';
+      else if (weightNum < 60) suggested = 'muscle-gain';
+      else suggested = 'stay-fit';
+      
+      setSuggestedGoalId(suggested);
+      const goalObj = goals.find(g => g.id === suggested);
+      if (goalObj) setSelectedGoal(goalObj);
+
+      setStep(3);
     }
   };
 
@@ -95,6 +118,46 @@ const Setup = () => {
 
         {step === 2 && (
           <div className="setup-step fade-up">
+            <div className="setup-icon">⚖️</div>
+            <h2 className="setup-title">Your Body Stats</h2>
+            <p className="setup-description">
+              Help Aacharya tailor the best advice for you
+            </p>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+              <input
+                type="number"
+                className="setup-input glass"
+                placeholder="Age (years)"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && age && weight && handleStatsSubmit()}
+                autoFocus
+              />
+              <input
+                type="number"
+                className="setup-input glass"
+                placeholder="Weight (kg)"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && age && weight && handleStatsSubmit()}
+              />
+            </div>
+            
+            <Button
+              variant="primary"
+              size="lg"
+              fullWidth
+              onClick={handleStatsSubmit}
+              disabled={!age || !weight}
+            >
+              Continue
+            </Button>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="setup-step fade-up">
             <div className="setup-icon">🎯</div>
             <h2 className="setup-title">Choose Your Fitness Goal</h2>
             <p className="setup-description">
@@ -115,6 +178,18 @@ const Setup = () => {
                   </h3>
                   <p className="goal-element">{goal.element}</p>
                   <p className="goal-traits">{goal.traits}</p>
+                  
+                  {suggestedGoalId === goal.id && (
+                    <div className="suggested-badge" style={{
+                      position: 'absolute', top: '-10px', right: '-10px', 
+                      background: 'var(--primary-color)', color: 'white', 
+                      padding: '4px 8px', borderRadius: '12px', fontSize: '0.7rem',
+                      fontWeight: 'bold', boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+                    }}>
+                      Suggested
+                    </div>
+                  )}
+
                   {selectedGoal?.id === goal.id && (
                     <div className="goal-check">✓</div>
                   )}

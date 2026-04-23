@@ -6,10 +6,11 @@ import './MissionCard.css';
 
 const MissionCard = ({ mission }) => {
   const { completeMission } = useMissions();
-  const { id, title, description, xp, icon, completed, category } = mission;
+  const { id, title, description, xp, icon, completed, category, type } = mission;
+  const isChallenge = type === 'challenge';
 
   const handleComplete = () => {
-    if (!completed) {
+    if (!completed && !isChallenge) {
       completeMission(id);
     }
   };
@@ -31,14 +32,14 @@ const MissionCard = ({ mission }) => {
       <p className="mission-description">{description}</p>
       
       <Button
-        variant={completed ? 'secondary' : 'primary'}
+        variant={completed ? 'secondary' : (isChallenge ? 'secondary' : 'primary')}
         size="sm"
         fullWidth
         onClick={handleComplete}
-        disabled={completed}
+        disabled={completed || isChallenge}
         icon={completed ? '✓' : null}
       >
-        {completed ? 'Completed' : 'Complete Mission'}
+        {completed ? 'Completed' : (isChallenge ? 'Auto-completes at 7 Days' : 'Complete Mission')}
       </Button>
       
       {completed && (

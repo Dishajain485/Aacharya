@@ -1,5 +1,5 @@
 // App Reducer - STRICT IMPLEMENTATION
-import { missions as initialMissions } from '../data/missions';
+import { missions as initialMissions, generateMissionsForGoal } from '../data/missions';
 import { badges as initialBadges } from '../data/badges';
 import { ranks, getRankByXP } from '../data/ranks';
 import { defaultAvatar } from '../data/avatars';
@@ -8,6 +8,8 @@ export const initialState = {
   // User Profile
   user: {
     name: '',
+    age: '',
+    weight: '',
     goal: null,
     avatar: defaultAvatar,
     onboardingComplete: false,
@@ -40,6 +42,15 @@ export const initialState = {
     joinDate: new Date().toISOString()
   },
   
+  // Daily Tracking (Dynamic)
+  dailyTracking: {
+    date: new Date().toDateString(),
+    calories: 0,
+    steps: 0,
+    speed: 0,
+    water: 0
+  },
+  
   // UI State
   showRankUpCinematic: false,
   showConfetti: false
@@ -53,12 +64,45 @@ export const appReducer = (state, action) => {
         ...state,
         user: { ...state.user, name: action.payload }
       };
-    
-    case 'SET_USER_GOAL':
+
+    case 'SET_USER_AGE':
       return {
         ...state,
-        user: { ...state.user, goal: action.payload }
+        user: { ...state.user, age: action.payload }
       };
+
+    case 'SET_USER_WEIGHT':
+      return {
+        ...state,
+        user: { ...state.user, weight: action.payload }
+      };
+    
+    case 'SET_USER_GOAL': {
+      const newBaseMissions = generateMissionsForGoal(action.payload.id);
+      
+      // Preserve custom missions (which have purely numeric IDs like Date.now())
+      const customMissions = state.missions.filter(m => typeof m.id === 'number' || !isNaN(m.id));
+      
+      // Merge base missions, keeping completion status if they existed before
+      const mergedMissions = newBaseMissions.map(newM => {
+        const existing = state.missions.find(old => old.id === newM.id);
+        return existing ? { ...newM, completed: existing.completed } : newM;
+      });
+
+      return {
+        ...state,
+        user: { ...state.user, goal: action.payload },
+        missions: [...customMissions, ...mergedMissions]
+      };
+    }
+    
+    // Tracking Actions
+    case 'LOG_CALORIES':
+      return { ...state, dailyTracking: { ...state.dailyTracking, calories: state.dailyTracking.calories + action.payload } };
+    case 'LOG_STEPS':
+      return { ...state, dailyTracking: { ...state.dailyTracking, steps: state.dailyTracking.steps + action.payload.steps, speed: action.payload.speed } };
+    case 'LOG_WATER':
+      return { ...state, dailyTracking: { ...state.dailyTracking, water: state.dailyTracking.water + action.payload } };
     
     case 'COMPLETE_ONBOARDING':
       return {
@@ -143,6 +187,18 @@ export const appReducer = (state, action) => {
         ...state,
         showConfetti: false
       };
+      
+    case 'ADD_MISSION':
+      return {
+        ...state,
+        missions: [action.payload, ...state.missions]
+      };
+      
+    case 'REMOVE_MISSION':
+      return {
+        ...state,
+        missions: state.missions.filter(m => m.id !== action.payload)
+      };
     
     // Streak Actions
     case 'UPDATE_STREAK': {
@@ -168,9 +224,17 @@ export const appReducer = (state, action) => {
         }
       }
       
+      let updatedMissions = state.missions;
+      if (newStreak >= 7) {
+        updatedMissions = updatedMissions.map(m => 
+          (m.type === 'challenge' && m.id === 'challenge-1') ? { ...m, completed: true } : m
+        );
+      }
+      
       return {
         ...state,
         streak: newStreak,
+        missions: updatedMissions,
         lastActiveDate: new Date().toISOString()
       };
     }

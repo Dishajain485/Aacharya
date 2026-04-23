@@ -92,11 +92,15 @@ export const missionsAPI = {
 
 // ─── Chat ─────────────────────────────────────────────────────────────────────
 export const chatAPI = {
-  sendMessage: (message) =>
-    authFetch(`${BASE_URL}/chat`, {
+  sendMessage: async (message) => {
+    const res = await fetch(`${BASE_URL}/chat`, {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message }),
-    }),
+    });
+    if (!res.ok) throw new Error((await res.json()).error || 'Chat request failed');
+    return res.json();
+  },
 };
 
 // ─── Health Check ─────────────────────────────────────────────────────────────

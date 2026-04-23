@@ -45,10 +45,20 @@ export const useMissions = () => {
   const getWeeklyMissions = () => state.missions.filter(m => m.type === 'weekly');
   const getChallengeMissions = () => state.missions.filter(m => m.type === 'challenge');
 
+  const addMission = (mission) => {
+    dispatch({ type: 'ADD_MISSION', payload: mission });
+  };
+
+  const removeMission = (missionId) => {
+    dispatch({ type: 'REMOVE_MISSION', payload: missionId });
+  };
+
   return {
     missions: state.missions,
     showConfetti: state.showConfetti,
     completeMission,
+    addMission,
+    removeMission,
     resetDailyMissions,
     hideConfetti,
     getDailyMissions,

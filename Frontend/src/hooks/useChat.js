@@ -27,12 +27,35 @@ export const useChat = () => {
     setIsTyping(true);
 
     try {
+      // Create a context-rich message for the AI
+      const contextStr = `[Context - Name: ${state.user.name || 'User'}, Age: ${state.user.age || 'Unknown'}, Weight: ${state.user.weight || 'Unknown'}, Current Goal: ${state.user.goal?.name || 'None'}]`;
+      const enrichedMessage = `${contextStr} \n\n${message}`;
+
       // Call real backend API
-      const response = await chatAPI.sendMessage(message);
+      const response = await chatAPI.sendMessage(enrichedMessage);
+      
+      let replyText = response.reply;
+      
+      // Parse Action Commands from AI
+      const goalMatch = replyText.match(/\[ACTION:CHANGE_GOAL:(.+?)\]/);
+      if (goalMatch) {
+        const newGoalId = goalMatch[1];
+        const goals = [
+          { id: 'weight-loss', name: 'Weight Loss', icon: '🔥', element: 'Burn Fat', traits: 'Cardio-focused', color: '#ec4899' },
+          { id: 'muscle-gain', name: 'Muscle Gain', icon: '💪', element: 'Build Strength', traits: 'Strength training', color: '#a855f7' },
+          { id: 'stay-fit', name: 'Stay Fit', icon: '⚡', element: 'Maintain Health', traits: 'Balanced routine', color: '#10b981' }
+        ];
+        const newGoal = goals.find(g => g.id === newGoalId);
+        if (newGoal) {
+          dispatch({ type: 'SET_USER_GOAL', payload: newGoal });
+        }
+        // Remove the command from the visible text
+        replyText = replyText.replace(/\[ACTION:CHANGE_GOAL:(.+?)\]/g, '').trim();
+      }
       
       const aiMessage = {
         id: Date.now() + 1,
-        text: response.reply,
+        text: replyText,
         sender: 'ai',
         timestamp: new Date().toISOString()
       };

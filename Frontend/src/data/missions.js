@@ -94,3 +94,30 @@ export const getCompletedMissions = () => {
 export const getTotalXP = () => {
   return missions.reduce((total, m) => m.completed ? total + m.xp : total, 0);
 };
+
+export const generateMissionsForGoal = (goalId) => {
+  // Keep base missions (hydration, sleep) but swap out fitness/nutrition based on goal
+  const baseMissions = missions.filter(m => m.category === 'health' || m.type !== 'daily');
+  
+  let specificMissions = [];
+  
+  if (goalId === 'weight-loss') {
+    specificMissions = [
+      { id: 'daily-1', title: 'Fat Burn Cardio', description: '45 mins of high intensity cardio', xp: 60, type: 'daily', category: 'fitness', icon: '🏃', completed: false },
+      { id: 'daily-3', title: 'Calorie Deficit', description: 'Stay under your calorie limit today', xp: 50, type: 'daily', category: 'nutrition', icon: '🥗', completed: false }
+    ];
+  } else if (goalId === 'muscle-gain') {
+    specificMissions = [
+      { id: 'daily-1', title: 'Heavy Lifting', description: 'Complete a progressive overload session', xp: 70, type: 'daily', category: 'fitness', icon: '🏋️', completed: false },
+      { id: 'daily-3', title: 'Protein Target', description: 'Hit your daily protein macro goal', xp: 50, type: 'daily', category: 'nutrition', icon: '🥩', completed: false }
+    ];
+  } else {
+    // stay-fit
+    specificMissions = [
+      { id: 'daily-1', title: 'Active 30', description: '30 minutes of any physical activity', xp: 40, type: 'daily', category: 'fitness', icon: '🚶', completed: false },
+      { id: 'daily-3', title: 'Balanced Meal', description: 'Eat at least 3 servings of veggies', xp: 40, type: 'daily', category: 'nutrition', icon: '🥦', completed: false }
+    ];
+  }
+  
+  return [...specificMissions, ...baseMissions];
+};
